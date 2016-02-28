@@ -1,0 +1,12 @@
+
+Here is the SAS code I used to generate link-specific emission factor data for UFP. 
+VS is average vehicle speed.  Emission is the emission factor.  Please replace the
+default value of 10.0 to the calculated emission factors.
+-----------
+data traffic; set traffic;         count=AADT/24;
+IF FUNCCL =2 OR FUNCCL =11 OR FUNCCL =12 THEN VS=65;
+ELSE IF FUNCCL =6 OR FUNCCL =7 OR FUNCCL =16 OR FUNCCL =17 THEN VS=30;
+ELSE IF FUNCCL=14 THEN VS=50;
+log_EF=0.92*FHDV_Final+0.0089*VS*1.609+13.64;
+Emission=(10**log_EF)/10**12;run;        
+run;  
